@@ -1,9 +1,11 @@
 package com.yelot.crm.controller;
 
 import com.yelot.crm.Util.ResponseData;
+import com.yelot.crm.Util.ResultData;
 import com.yelot.crm.entity.User;
 import com.yelot.crm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +15,7 @@ import java.util.List;
 /**
  * Created by kee on 17/5/14.
  */
-@RestController
-@RequestMapping("user")
+@Controller
 public class UserController {
 
     @Autowired
@@ -24,6 +25,27 @@ public class UserController {
     public String test(){
         return "hello world";
     }
+
+    /**
+     * 首页，login.html
+     * @return
+     */
+    @RequestMapping("/")
+    public String index(){
+        return "login";
+    }
+
+    @RequestMapping("login")
+    public String  login(String username,String password){
+        User user = userService.login(username,password);
+        if(user != null){
+            return "index";
+        }
+        return "login";
+
+    }
+
+
 
     @RequestMapping("find")
     public User find(Long id){
